@@ -1,9 +1,9 @@
 #Name: Christopher Barfield
 #Date:  11/2/2024
 
-from ArrayList import ArrayList
+from Array.ArrayList import ArrayList #FIXME Find out if you can put this in __init__.py in the folder Array??? Otherwise it has to be called like this?
 from Client import Client
-from Quicksort import Quicksort
+from SortingAlgo.Quicksort import Quicksort
 from datetime import date
 import time
 import random
@@ -11,16 +11,24 @@ import sys
 
 
 # Consdier this addRecords()
-def testNumberOne():
+def testNumberOne(numofClients, arrayList, clientRecords):
     """
-    Let’s test the first scenario. If you accept jobs at the back of the line and then process the jobs 
-    from the front of the line, which data structure is best? Write code to test how much time that 
-    it takes to add the Client objects from the list into the ArrayList data structure. 
-    The ArrayList automatically adds the new records to the end of the data structure so add this 
-    time to the spreadsheet into the “Add many records to end of data structure” row in the Excel table.
+        Tests the time taken to add a specified number of Client objects to the end of an ArrayList.
+
+    This function simulates the process of accepting jobs at the end of a line and processing 
+    them from the front, evaluating the performance of the ArrayList data structure. It measures 
+    and logs the time taken to add Client objects to the ArrayList, which automatically appends 
+    new records at the end. The recorded time can be used to populate a spreadsheet row 
+    corresponding to the "Add many records to end of data structure" scenario.
+
+    Args:
+        numofClients (int): The number of Client objects to be added to the ArrayList.
+
+    Returns:
+        None
     """
     startTime = time.time()
-    appendToArray(numofClients)
+    appendToArray(numofClients, arrayList, clientRecords)
     endTime = time.time()
     elapsedTime = endTime - startTime
     print(f"\n1.\tTime taken to add {numofClients} client records to ArrayList: {elapsedTime:.6f} seconds")
@@ -98,14 +106,27 @@ def testNumberThree(numOfClients):
 
 
 
-def appendToArray(numOfClients):
+def appendToArray(numofClients, arrayList, clientRecords):
     """
     Append clientRecords to an array object
     """
     for i in range(numofClients):
-        funWithArrays.append(clientRecords[i])
+        arrayList.append(clientRecords[i])
 
-def createClientRecords():
+def createClientRecords(clientRecords):
+    """
+    Reads client data from a CSV file and creates client objects.
+
+    This function reads each line from 'ClientData.csv', extracts client information, 
+    and creates a Client object for each record. The created client objects are appended 
+    to the provided clientRecords list.
+
+    Args:
+        clientRecords (list): A list to store Client objects created from the CSV data.
+
+    Returns:
+        None
+    """
     input_file_name = 'ClientData.csv'
     with open(input_file_name) as infile:
         for line in infile:
@@ -122,21 +143,23 @@ def createClientRecords():
             # add the client object to the list
             clientRecords.append(clt)
 
-# display name and date in output
-print("Name:", "Christopher H Barfield")
-print("Date:", date.today())
+def main():
+    # display name and date in output
+    print("Name:", "Christopher H Barfield")
+    print("Date:", date.today())
 
-clientRecords = []
-createClientRecords()
-Quicksort.sort(clientRecords)
-funWithArrays = ArrayList()
-numofClients = len(clientRecords)
-testNumberOne()
-testNumberOneContinued() # deletes funwitharray data
-appendToArray(numofClients)
-testNumberTwo(numofClients)
-testNumberThree(numofClients)
+    clientRecords = []
+    createClientRecords()
+    Quicksort.sort(clientRecords)
+    funWithArrays = ArrayList()
+    numofClients = len(clientRecords)
+    testNumberOne()
+    testNumberOneContinued() # deletes funwitharray data
+    appendToArray(numofClients)
+    testNumberTwo(numofClients)
+    testNumberThree(numofClients)
+
+if __name__ == "__main__":
+    main()
 
 
-
-#testNumberTwo(numofClients)
