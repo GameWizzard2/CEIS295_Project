@@ -1,4 +1,11 @@
-from Array import createClientRecords, ArrayList, testNumberOne
+from Array import (createClientRecords, 
+                   appendToArray,
+                   ArrayList, 
+                   testNumberOne, 
+                   testNumberOneContinued,
+                   testNumberTwo,
+                   testNumberThree,
+                   )
 from SortingAlgo import Quicksort
 from datetime import date
 
@@ -16,7 +23,7 @@ funWithArrays = ArrayList()
 numofClients = len(clientRecords)
 #print(numofClients) #FIXME make this into a test? 
 testNumberOne(numofClients, funWithArrays, clientRecords)
-#testNumberOneContinued() # deletes funwitharray data
-#appendToArray(numofClients)
-#testNumberTwo(numofClients)
-#testNumberThree(numofClients)
+testNumberOneContinued(numofClients, funWithArrays, clientRecords) # deletes funwitharray data
+appendToArray(numofClients, funWithArrays, clientRecords)
+testNumberTwo(numofClients, funWithArrays, clientRecords)
+testNumberThree(numofClients, funWithArrays, clientRecords)
