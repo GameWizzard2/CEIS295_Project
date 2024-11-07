@@ -10,7 +10,6 @@ import time
 import random
 import sys
 
-
 # Consdier this addRecords()
 def testNumberOne(numofClients, arrayList, clientRecords):
     """
@@ -38,7 +37,7 @@ def testNumberOne(numofClients, arrayList, clientRecords):
     print(f"\n1.\tTime taken to add {numofClients} client records to ArrayList: {elapsedTime:.6f} seconds")
 
 # Consider this removeFromStart()
-def testNumberOneContinued(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client']):
+def testNumberOneContinued(numofClients: int, arrayList: 'ArrayList'):
     """
     Tests the time taken to remove Client objects from the front of an ArrayList, one at a time.
 
@@ -51,7 +50,6 @@ def testNumberOneContinued(numofClients: int, arrayList: 'ArrayList', clientReco
         numofClients (int): The number of Client objects to be added to the ArrayList.
         arrayList (ArrayList): An instance of the ArrayList class representing the data structure 
                            to which Client objects will be added.
-        clientRecords (list): A list containing Client objects to be added to the ArrayList.
 
     Returns:
         None
@@ -65,7 +63,7 @@ def testNumberOneContinued(numofClients: int, arrayList: 'ArrayList', clientReco
     print(f"\n1-2.\tTime taken to remove {numofClients} client records from ArrayList: {elapsedTime:.6f} seconds")
 
 # Consider this displayAThousandRandomRecords()
-def testNumberTwo(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client']):
+def testNumberTwo(numofClients: int, arrayList: 'ArrayList'):
     """
      Tests the time taken to search for and display random client records from an ArrayList.
 
@@ -79,7 +77,6 @@ def testNumberTwo(numofClients: int, arrayList: 'ArrayList', clientRecords: List
         numofClients (int): The number of Client objects present in the ArrayList.
         arrayList (ArrayList): An instance of the ArrayList class representing the data structure 
                                from which client records will be searched.
-        clientRecords (list of Client): A list containing Client objects.
 
     Returns:
         None
@@ -100,11 +97,25 @@ def testNumberTwo(numofClients: int, arrayList: 'ArrayList', clientRecords: List
 
 def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client'], ):
     """
-    3.	Let’s consider the third scenario. Consider a credit card call center. The representatives may sign up new 
-    credit card accounts (add records). The representatives may answer customers’ questions (display random records). 
-    Finally, the representatives may delete a paid-off account at the request of the customer (remove records). Write 
-    code to test how much time it takes to add the Client records to the ArrayList, then randomly display records, 
-    and then randomly delete records. Add this time to the spreadsheet into the bottom row.
+    Tests the time taken to add, display, and remove Client records from an ArrayList.
+
+    This function simulates a credit card call center scenario where representatives need to:
+    1. Add client records to the ArrayList.
+    2. Display 1000 random client records.
+    3. Remove 1000 random client records.
+
+    The function measures the time taken to complete these operations and logs the total elapsed time. 
+    The recorded time can be used for performance analysis in the "Add, display, and remove records" 
+    scenario for an Excel table or report.
+
+    Args:
+        numofClients (int): The number of Client objects to be added, displayed, and removed from the ArrayList.
+        arrayList (ArrayList): An instance of the ArrayList class representing the data structure 
+                               in which client records will be added, displayed, and removed.
+        clientRecords (list of Client): A list containing Client objects to be added to the ArrayList.
+
+    Returns:
+        None
     """
     startTime = time.time()
     # append to array.
@@ -130,9 +141,6 @@ def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: Li
     elapsedTime = endTime - startTime
     print(f"\n3.\tTime taken to add {numofClients}, and then display and remove 1000 random client records: {elapsedTime:.6f} seconds")
     
-
-
-
 def appendToArray(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client']):
     """
     Add clientrecords to an array list Tests.
@@ -168,6 +176,7 @@ def createClientRecords(clientRecords):
     Returns:
         None
     """
+    clientRecords = []
     input_file_name = 'ClientData.csv'
     with open(input_file_name) as infile:
         for line in infile:
@@ -183,23 +192,38 @@ def createClientRecords(clientRecords):
             
             # add the client object to the list
             clientRecords.append(clt)
+        return clientRecords
+
         
+""" working on reformating this to only call to create an array, and check for an existing one.
+def createArray():
+    clientRecords = createClientRecords(clientRecords)
+    Quicksort.sort(clientRecords) #FIXME make this an optional call for user.
+    newArray = ArrayList()
+    numofClients = len(clientRecords)
+    return newArray, numofClients, clientRecords
+
+def checkForExistingArray(existingArray = None):
+    if not existingArray:
+        print("The array is empty or not provided.")
+        return createArray()
+    else:
+        print("Using pre-existing array data")
+        """
 
 def main():
-    # display name and date in output
-    print("Name:", "Christopher H Barfield")
-    print("Date:", date.today())
-
     clientRecords = []
-    createClientRecords()
-    Quicksort.sort(clientRecords)
+    createClientRecords(clientRecords)
+    Quicksort.sort(clientRecords) #FIXME make this an optional call for user.
     funWithArrays = ArrayList()
     numofClients = len(clientRecords)
-    testNumberOne()
-    testNumberOneContinued() # deletes funwitharray data
-    appendToArray(numofClients)
-    testNumberTwo(numofClients)
-    testNumberThree(numofClients)
+    #print(numofClients) #FIXME make this into a test? 
+    testNumberOne(numofClients, funWithArrays, clientRecords)
+    testNumberOneContinued(numofClients, funWithArrays, clientRecords) # deletes funwitharray data
+    appendToArray(numofClients, funWithArrays, clientRecords)
+    testNumberTwo(numofClients, funWithArrays, clientRecords)
+    testNumberThree(numofClients, funWithArrays, clientRecords)
+
 
 if __name__ == "__main__":
     main()

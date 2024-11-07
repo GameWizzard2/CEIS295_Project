@@ -4,5 +4,6 @@ from .ArrayListActualSpeed import (testNumberOne,
                                    testNumberThree,
                                    createClientRecords,
                                    appendToArray,
+                                   checkForExistingArray,
                                    )
 from .ArrayList import ArrayList
