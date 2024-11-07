@@ -95,9 +95,6 @@ def testNumberThree(numOfClients):
     elapsedTime = endTime - startTime
     print(f"\n3.\tTime taken to add {numofClients}, and then display and remove 1000 random client records: {elapsedTime:.6f} seconds")
     
-
-
-
 def appendToArray(numOfClients):
     """
     Append clientRecords to an array object
@@ -122,6 +119,10 @@ def createClientRecords():
             # add the client object to the list
             clientRecords.append(clt)
 
+def userContinueInput():
+    print("Press \"Enter\" to continue...")
+    sys.stdin.read(1)  # Reads one character (like Enter) from standard input
+
 # display name and date in output
 print("Name:", "Christopher H Barfield")
 print("Date:", date.today())
@@ -131,12 +132,13 @@ createClientRecords()
 Quicksort.sort(clientRecords)
 funWithArrays = ArrayList()
 numofClients = len(clientRecords)
+
 testNumberOne()
 testNumberOneContinued() # deletes funwitharray data
+userContinueInput()
 appendToArray(numofClients)
 testNumberTwo(numofClients)
+userContinueInput()
 testNumberThree(numofClients)
+userContinueInput()
 
-
-
-#testNumberTwo(numofClients)
