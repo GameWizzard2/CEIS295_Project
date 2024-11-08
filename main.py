@@ -1,4 +1,6 @@
-from Array import (createClientRecords, 
+from Array import (createClientRecords,
+                   createArray,
+                   checkForExistingArray,
                    appendToArray,
                    ArrayList, 
                    testNumberOne, 
@@ -35,6 +37,8 @@ class ProjectApp():
     @Slot()
     def say_hello(self):
         print("Button clicked, Hello!")
+        checkForExistingArray()
+        funWithArrays, numofClients, clientRecords = createArray()
         testNumberOne(numofClients, funWithArrays, clientRecords)
 
 def main():

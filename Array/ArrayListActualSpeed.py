@@ -162,7 +162,7 @@ def appendToArray(numofClients: int, arrayList: 'ArrayList', clientRecords: List
     for i in range(numofClients):
         arrayList.append(clientRecords[i])
 
-def createClientRecords(clientRecords):
+def createClientRecords():
     """
     Reads client data from a CSV file and creates client objects.
 
@@ -195,9 +195,14 @@ def createClientRecords(clientRecords):
         return clientRecords
 
         
-""" working on reformating this to only call to create an array, and check for an existing one.
+# working on reformating this to only call to create an array, and check for an existing one.
 def createArray():
-    clientRecords = createClientRecords(clientRecords)
+    """
+    Returns:
+        clientRecords (list):
+
+        """
+    clientRecords = createClientRecords()
     Quicksort.sort(clientRecords) #FIXME make this an optional call for user.
     newArray = ArrayList()
     numofClients = len(clientRecords)
@@ -205,18 +210,19 @@ def createArray():
 
 def checkForExistingArray(existingArray = None):
     if not existingArray:
-        print("The array is empty or not provided.")
-        return createArray()
+        print("The array is empty or not provided. Create an in the menu.")
     else:
-        print("Using pre-existing array data")
-        """
+        print("Using pre-existing array data!")
+
 
 def main():
-    clientRecords = []
-    createClientRecords(clientRecords)
+    """clientRecords = []
+    numofClients = createClientRecords(clientRecords)
     Quicksort.sort(clientRecords) #FIXME make this an optional call for user.
     funWithArrays = ArrayList()
-    numofClients = len(clientRecords)
+    numofClients = len(clientRecords)"""
+    checkForExistingArray()
+    funWithArrays, numofClients, clientRecords = createClientRecords()
     #print(numofClients) #FIXME make this into a test? 
     testNumberOne(numofClients, funWithArrays, clientRecords)
     testNumberOneContinued(numofClients, funWithArrays, clientRecords) # deletes funwitharray data
