@@ -11,7 +11,7 @@ from Array import (createClientRecords,
 from SortingAlgo import Quicksort
 from datetime import date
 import sys
-from PySide6.QtWidgets import QApplication, QPushButton
+from PySide6.QtWidgets import QApplication, QPushButton, QWidget, QVBoxLayout
 from PySide6.QtCore import Slot
 
 class ProjectApp():
@@ -19,25 +19,78 @@ class ProjectApp():
         # Create the Qt Application
         self.app = QApplication(sys.argv)
 
+        # Create a main window to hold widgets.
+        self.window = QWidget()
+        self.layout = QVBoxLayout()
+
         # Create a button, connect it and show it
-        self.button = QPushButton("Click me")
+        self.button = QPushButton("Array List: Test One part A")
+        self.button2 = QPushButton("Array List: Test One part A")
+        self.button3 = QPushButton("Array List: Test Two")
+        self.button4 = QPushButton("Array List: Test Three part A")
+        self.button5 = QPushButton("Add Array")
+
+        # Set the layout for the window and show it
+        self.window.setLayout(self.layout)
+        self.window.setWindowTitle("Project App")
+        self.window.show()
+        
 
 
     def run(self):
         self.connectRunButton()
+        self.showButtonsInLayout()
         # Run the main Qt loop
         self.app.exec()
+
         
 
     def connectRunButton(self):
-        self.button.clicked.connect(self.say_hello)
+        self.button.clicked.connect(self.arrayTestOneA)
+        self.button2.clicked.connect(self.arrayTestOneA)
+        self.button3.clicked.connect(self.arrayTestOneA)
+        self.button4.clicked.connect(self.arrayTestOneA)
+        self.button5.clicked.connect(self.arrayTestOneA)
+
+    def showButtonsInLayout(self):
+        
+        self.layout.addWidget(self.button)
+        self.layout.addWidget(self.button2)
+        self.layout.addWidget(self.button3)
+        self.layout.addWidget(self.button4)
+        self.layout.addWidget(self.button5)
         self.button.show()
+        self.button2.show()
+        self.button3.show()
+        self.button4.show()
+        self.button5.show()
 
 
     @Slot()
-    def say_hello(self):
-        print("Button clicked, Hello!")
-        checkForExistingArray()
+    def arrayTestOneA(self):#TODO make more button fuctions
+        print("Running Test One!")
+        checkForExistingArray() #TODO make this its own button.
+        funWithArrays, numofClients, clientRecords = createArray()
+        testNumberOne(numofClients, funWithArrays, clientRecords)
+
+    @Slot()
+    def arrayTestOneB(self):#TODO make more button fuctions
+        print("Running Test One!")
+        checkForExistingArray() #TODO make this its own button.
+        funWithArrays, numofClients, clientRecords = createArray()
+        testNumberOne(numofClients, funWithArrays, clientRecords)
+
+    @Slot()
+    def arrayTestTwo(self):#TODO make more button fuctions
+        print("Running Test One!")
+        checkForExistingArray() #TODO make this its own button.
+        funWithArrays, numofClients, clientRecords = createArray()
+        testNumberOne(numofClients, funWithArrays, clientRecords)
+
+    @Slot()
+    def arrayTestThree(self):#TODO make more button fuctions
+        print("Running Test One!")
+        checkForExistingArray() #TODO make this its own button.
         funWithArrays, numofClients, clientRecords = createArray()
         testNumberOne(numofClients, funWithArrays, clientRecords)
 
