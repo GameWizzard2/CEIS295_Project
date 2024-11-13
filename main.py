@@ -8,6 +8,7 @@ from Array import (createClientRecords,
                    testNumberTwo,
                    testNumberThree,
                    )
+from Logger import CustomLogger
 from SortingAlgo import Quicksort
 from datetime import date
 import sys
@@ -30,22 +31,21 @@ class ProjectApp():
         self.button4 = QPushButton("Array List: Test Three part A")
         self.button5 = QPushButton("Add Array")
 
+    def windowLayout(self):
         # Set the layout for the window and show it
         self.window.setLayout(self.layout)
         self.window.setWindowTitle("Project App")
         self.window.show()
-        
-
 
     def run(self):
+        self.windowLayout()
         self.connectRunButton()
         self.showButtonsInLayout()
         # Run the main Qt loop
         self.app.exec()
 
-        
-
     def connectRunButton(self):
+        # connect the buttons to a fuction.
         self.button.clicked.connect(self.arrayTestOneA)
         self.button2.clicked.connect(self.arrayTestOneA)
         self.button3.clicked.connect(self.arrayTestOneA)
@@ -53,7 +53,7 @@ class ProjectApp():
         self.button5.clicked.connect(self.arrayTestOneA)
 
     def showButtonsInLayout(self):
-        
+        # Show the buttons in the main window.
         self.layout.addWidget(self.button)
         self.layout.addWidget(self.button2)
         self.layout.addWidget(self.button3)
@@ -64,6 +64,7 @@ class ProjectApp():
         self.button3.show()
         self.button4.show()
         self.button5.show()
+        CustomLogger.debug("buttons added to window layout from showButtonsInLayout")
 
 
     @Slot()
@@ -95,6 +96,8 @@ class ProjectApp():
         testNumberOne(numofClients, funWithArrays, clientRecords)
 
 def main():
+    # Setup logger.
+    CustomLogger.main()
     # display name and date in output
     print("Name:", "Christopher H Barfield")
     print("Date:", date.today())
@@ -115,4 +118,5 @@ def main():
 
 
 if __name__ == "__main__":
+    #
     ProjectApp().run()
