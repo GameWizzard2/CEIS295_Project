@@ -71,7 +71,7 @@ class ProjectApp():
     def arrayTestOneA(self):#TODO make more button fuctions
         print("Running Test One!")
         checkForExistingArray() #TODO make this its own button.
-        funWithArrays, numofClients, clientRecords = createArray()
+        #funWithArrays, numofClients, clientRecords = createArray()
         testNumberOne(numofClients, funWithArrays, clientRecords)
 
     @Slot()
