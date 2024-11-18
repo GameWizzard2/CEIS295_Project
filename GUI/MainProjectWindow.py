@@ -14,7 +14,19 @@ from Array import (createClientRecords,
                    )
 
 class ProjectApp():
+    """
+    A GUI application for interacting with array operations using PySide6.
+
+    This class creates a PySide6-based GUI with buttons to trigger 
+    different operations related to arrays and their tests.
+    """
     def __init__(self):
+        """
+        Initializes the GUI application and its components.
+
+        Creates an instance of the QApplication, sets up the main window,
+        layout, and initializes buttons for array operations.
+        """
         # Create the Qt Application
         self.app = QApplication(sys.argv)
 
@@ -30,12 +42,20 @@ class ProjectApp():
         self.button5 = QPushButton("Add Array")
 
     def windowLayout(self):
-        # Set the layout for the window and show it
+        """
+        Sets up the layout for the main window and displays it.
+        """
         self.window.setLayout(self.layout)
         self.window.setWindowTitle("Project App")
         self.window.show()
 
     def run(self):
+        """
+        Runs the GUI application.
+
+        This method sets up the window layout, connects button actions,
+        adds buttons to the layout, and starts the main event loop.
+        """
         self.windowLayout()
         self.connectRunButton()
         self.showButtonsInLayout()
@@ -43,7 +63,9 @@ class ProjectApp():
         self.app.exec()
 
     def connectRunButton(self):
-        # connect the buttons to a fuction.
+        """
+        Connects button clicks to their corresponding functions.
+        """
         self.button.clicked.connect(self.arrayTestOneA)
         self.button2.clicked.connect(self.arrayTestOneA)
         self.button3.clicked.connect(self.arrayTestOneA)
@@ -51,7 +73,9 @@ class ProjectApp():
         self.button5.clicked.connect(self.arrayTestOneA)
 
     def showButtonsInLayout(self):
-        # Show the buttons in the main window.
+        """
+        Adds buttons to the window layout and ensures they are visible.
+        """
         self.layout.addWidget(self.button)
         self.layout.addWidget(self.button2)
         self.layout.addWidget(self.button3)
@@ -66,6 +90,12 @@ class ProjectApp():
 
     @Slot()
     def create_array(self):#FIXME make this fuction create an array then add the button above
+        """
+        Creates an array and runs a test on it.
+
+        This function initializes a new array, checks if an existing array
+        exists, and then runs Test Number One.
+        """
         print("Adding Array!")
         checkForExistingArray() #TODO make this its own button.
         funWithArrays, numofClients, clientRecords = createArray()
@@ -73,6 +103,12 @@ class ProjectApp():
 
     @Slot()
     def arrayTestOneA(self, ):#TODO make more button fuctions
+        """
+        Runs Test Number One, Part A.
+
+        This function checks for an existing array and creates a new one
+        if necessary, then runs Test Number One.
+        """
         print("Running Test One!")
         checkForExistingArray() #TODO make this its own button.
         funWithArrays, numofClients, clientRecords = createArray()
