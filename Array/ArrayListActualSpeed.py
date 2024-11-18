@@ -39,7 +39,7 @@ def testNumberOne(numofClients, arrayList, clientRecords):
 # Consider this removeFromStart()
 def testNumberOneContinued(numofClients: int, arrayList: 'ArrayList'):
     """
-    Tests the time taken to remove Client objects from the front of an ArrayList, one at a time.
+    Tests the time taken to remove Client objects from the front of an existing ArrayList, one at a time.
 
     This function measures the performance of removing Client objects from the front of an 
     ArrayList instance, simulating the process of pulling records one by one. The time taken 

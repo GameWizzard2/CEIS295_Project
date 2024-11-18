@@ -71,11 +71,11 @@ def main():
     logging.debug('Test message logged.')
 
 
-main()
+#main()
 
-# Re-export logging functions for convenience
+"""# Re-export logging functions for convenience
 debug = logging.debug
 info = logging.info
 warning = logging.warning
 error = logging.error
-critical = logging.critical
+critical = logging.critical"""
