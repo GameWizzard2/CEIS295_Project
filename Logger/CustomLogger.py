@@ -19,7 +19,7 @@ def setup_logging():
     logging.basicConfig(
         filename=log_file,
         level=logging.DEBUG,
-        format='%(asctime)s - %(filename)s - %(name)s - %(levelname)s - %(lineno)d - %(message)s'
+        format='<\nTime: %(asctime)s \nFileName: %(filename)s \nName:%(name)s \nLevel:%(levelname)s \nLine:%(lineno)d \nMessages:\n%(message)s\n>\n'
     )
 
     # Configure logging to console for ERROR level messages and above
@@ -71,11 +71,6 @@ def main():
     logging.debug('Test message logged.')
 
 
-#main()
+if __name__ == "__name__":
+    main()
 
-"""# Re-export logging functions for convenience
-debug = logging.debug
-info = logging.info
-warning = logging.warning
-error = logging.error
-critical = logging.critical"""

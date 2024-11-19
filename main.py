@@ -12,7 +12,6 @@ from GUI import ProjectApp
 from Logger import CustomLogger
 from SortingAlgo import Quicksort
 from datetime import date
-import sys
 
 
 def main():

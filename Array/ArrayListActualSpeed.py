@@ -6,6 +6,7 @@ from Client import Client
 from SortingAlgo.Quicksort import Quicksort
 from datetime import date
 from typing import List
+import logging
 import time
 import random
 import sys
@@ -87,13 +88,14 @@ def testNumberTwo(numofClients: int, arrayList: 'ArrayList'):
         smallest_id = 100001
         largest_id = smallest_id + numofClients
         random_num = random.randint(smallest_id, largest_id)
-        #print(funWithArrays.search(Client(random_num))) #FIXME allow user to choose.
-        print(arrayList.search_sorted(Client(random_num)))
+        print(arrayList.search(Client(random_num))) #FIXME allow user to choose.
+        #print(arrayList.search_sorted(Client(random_num)))
 
 
     endTime = time.time()
     elapsedTime = endTime - startTime
     print(f"\n2.\tTime taken to search for {numofClients} random client records: {elapsedTime:.6f} seconds")
+    
 
 def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client'], ):
     """
@@ -210,9 +212,11 @@ def createArray():
 
 def checkForExistingArray(existingArray = None):
     if not existingArray:
-        print("The array is empty or not provided. Create an in the menu.")
+        logging.error("The array is empty or not provided. Create an in the menu.")
+        return False
     else:
-        print("Using pre-existing array data!")
+        logging.debug("Using pre-existing array data!")
+        return True
 
 
 def main():
