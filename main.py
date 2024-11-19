@@ -1,4 +1,4 @@
-from Array import (createClientRecords,
+from Array import (create_client_records,
                    createArray,
                    checkForExistingArray,
                    appendToArray,
@@ -22,7 +22,7 @@ def main():
     print("Date:", date.today())
 
     clientRecords = []
-    createClientRecords(clientRecords)
+    create_client_records(clientRecords)
     Quicksort.sort(clientRecords) #FIXME make this an optional call for user.
     funWithArrays = ArrayList()
     numofClients = len(clientRecords)
@@ -37,6 +37,5 @@ def main():
 
 
 if __name__ == "__main__":
-    #
     CustomLogger.main()
     ProjectApp().run()

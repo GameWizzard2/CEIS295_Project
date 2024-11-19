@@ -1,6 +1,7 @@
 #Name: Christopher Barfield
 #Date:  11/2/2024
 
+from http import client
 from Array.ArrayList import ArrayList #FIXME Find out if you can put this in __init__.py in the folder Array??? Otherwise it has to be called like this?
 from Client import Client
 from SortingAlgo.Quicksort import Quicksort
@@ -57,8 +58,7 @@ def testNumberOneContinued(numofClients: int, arrayList: 'ArrayList'):
 
     """
     startTime = time.time()
-    for i in range(numofClients):
-        arrayList.remove_at(0)
+    remove_from_array(numofClients, arrayList)
     endTime = time.time()
     elapsedTime = endTime - startTime
     print(f"\n1-2.\tTime taken to remove {numofClients} client records from ArrayList: {elapsedTime:.6f} seconds")
@@ -130,7 +130,7 @@ def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: Li
         random_num = random.randint(smallest_id, largest_id)
         #print(funWithArrays.search(Client(random_num)))
         print(arrayList.search_sorted(Client(random_num)))
-    
+
     # Delete 1000 random records
     for i in range(1000):
         smallestId = 100001
@@ -139,9 +139,10 @@ def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: Li
        #print(funWithArrays.search(Client(random_num))) #FIXME allow user to choose.
         print(arrayList.search_sorted(Client(random_num)))
 
+
     endTime = time.time()
     elapsedTime = endTime - startTime
-    print(f"\n3.\tTime taken to add {numofClients}, and then display and remove 1000 random client records: {elapsedTime:.6f} seconds")
+    print(f"\n3.\tTime taken to add {numofClients}, display, then remove 1000 random client records: {elapsedTime:.6f} seconds")
     
 def appendToArray(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client']):
     """
@@ -164,7 +165,22 @@ def appendToArray(numofClients: int, arrayList: 'ArrayList', clientRecords: List
     for i in range(numofClients):
         arrayList.append(clientRecords[i])
 
-def createClientRecords():
+def remove_from_array(numofClients: int, arrayList: 'ArrayList'):
+    """
+    Remove Client objects from the front of an existing ArrayList, one at a time.
+
+    Args:
+        numofClients (int): The number of Client objects to be added to the ArrayList.
+        arrayList (ArrayList): An instance of the ArrayList class representing the data structure 
+                           to which Client objects will be added.
+
+    Returns:
+        None
+    """
+    for i in range(numofClients):
+        arrayList.remove_at(0)
+
+def create_client_records():
     """
     Reads client data from a CSV file and creates client objects.
 
@@ -204,29 +220,32 @@ def createArray():
         clientRecords (list):
 
         """
-    clientRecords = createClientRecords()
+    clientRecords = create_client_records()
     Quicksort.sort(clientRecords) #FIXME make this an optional call for user.
     newArray = ArrayList()
     numofClients = len(clientRecords)
     return newArray, numofClients, clientRecords
 
-def checkForExistingArray(existingArray = None):
+def checkForExistingArray(numofClients: int, existingArray = None):
     if not existingArray:
-        logging.error("The array is empty or not provided. Create an in the menu.")
+        logging.debug("The array is empty or not provided. Create an array in the menu.")
+        return False
+    elif numofClients == 0:
+        logging.debug("Array exists but has no clients. Create an array in the menu.")
         return False
     else:
-        logging.debug("Using pre-existing array data!")
+        logging.info("Using pre-existing array data!")
         return True
 
 
 def main():
     """clientRecords = []
-    numofClients = createClientRecords(clientRecords)
+    numofClients = create_client_records(clientRecords)
     Quicksort.sort(clientRecords) #FIXME make this an optional call for user.
     funWithArrays = ArrayList()
     numofClients = len(clientRecords)"""
     checkForExistingArray()
-    funWithArrays, numofClients, clientRecords = createClientRecords()
+    funWithArrays, numofClients, clientRecords = create_client_records()
     #print(numofClients) #FIXME make this into a test? 
     testNumberOne(numofClients, funWithArrays, clientRecords)
     testNumberOneContinued(numofClients, funWithArrays, clientRecords) # deletes funwitharray data

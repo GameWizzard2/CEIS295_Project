@@ -2,7 +2,8 @@ from PySide6.QtWidgets import QApplication, QPushButton, QWidget, QVBoxLayout
 from PySide6.QtCore import Slot
 import sys
 import logging
-from Array import (createClientRecords,
+import time
+from Array import (create_client_records,
                    createArray,
                    checkForExistingArray,
                    appendToArray,
@@ -40,7 +41,7 @@ class ProjectApp():
         self.array_test_one_button = QPushButton("Array List: Test One part A")
         self.array_test_one_part_two_button = QPushButton("Array List: Test One part B")
         self.array_test_two_button = QPushButton("Array List: Test Two")
-        self.array_test_three_button = QPushButton("Array List: Test Three part A")
+        self.array_test_three_button = QPushButton("Array List: Test Three")
         self.createArrayButton = QPushButton("Create Array")
 
         # Internal attributes for array data management
@@ -76,7 +77,7 @@ class ProjectApp():
         self.array_test_one_button.clicked.connect(self.array_test_one_a)
         self.array_test_one_part_two_button.clicked.connect(self.array_test_one_b)
         self.array_test_two_button.clicked.connect(self.array_test_two)
-        self.array_test_three_button.clicked.connect(self.array_test_one_a)
+        self.array_test_three_button.clicked.connect(self.array_test_three)
         self.createArrayButton.clicked.connect(self.create_array_fuction)
 
     def show_buttons_in_layout(self):
@@ -162,7 +163,7 @@ class ProjectApp():
         This function checks for an existing array and creates a new one
         if necessary, then runs Test Number One.
         """
-        logging.info("Running Test One, Creating Array!")
+        logging.debug("Running Test One, Creating Array!")
         funWithArrays, numofClients, clientRecords = createArray()
         self.array_list = funWithArrays
         self.client_count = numofClients
@@ -171,26 +172,37 @@ class ProjectApp():
 
     @Slot()
     def array_test_one_b(self):
-        logging.info("Running Test One Part B!")
-        if checkForExistingArray(self.array_list) == True:
-            testNumberOneContinued(self.client_count, self.array_list)
-            self.client_count = 0
-            logging.info("All clients have been removed!")
-
-
-    @Slot()
-    def array_test_two(self): #FICME keep getting none when printing random records.
+        if not checkForExistingArray(self.client_count, self.array_list):
+            # Exit the function early if check fails
+            return
         
-        if checkForExistingArray(self.array_list) == True:
-            print("Running Test Two!")
-            testNumberTwo(self.client_count, self.array_list)
-            logging.info("1000 random records have been displayed")
+        # Proceed if checkForExistingArray returned True
+        testNumberOneContinued(self.client_count, self.array_list)
+        self.client_count = 0
+        logging.info("All clients have been removed!")
+
+    @Slot()
+    def array_test_two(self):
+        
+        if not checkForExistingArray(self.client_count, self.array_list):
+            # Exit the function early if check fails
+            return
+        
+        # Proceed if checkForExistingArray returned True
+        logging.info("Running Test Two!")
+        testNumberTwo(self.client_count, self.array_list)
+        logging.info("1000 random records have been displayed")
 
 
     @Slot()
-    def array_test_three(self):#TODO make more button fuctions
-        print("Running Test One!")
-        checkForExistingArray() #TODO make this its own button.
-        funWithArrays, numofClients, clientRecords = createArray()
-        testNumberOne(numofClients, funWithArrays, clientRecords)
+    def array_test_three(self):#FIXME
+        if not checkForExistingArray(self.client_count, self.array_list):
+            # Exit the function early if check fails
+            return
+        
+        # Proceed if checkForExistingArray returned True
+        logging.info("Running Test Three!")
+        time.sleep(3)
+        testNumberThree(self.client_count, self.array_list, self.client_data_records)
+        logging.info("Call center simulation completed")
         
