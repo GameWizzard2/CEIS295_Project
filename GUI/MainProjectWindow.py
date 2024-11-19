@@ -12,6 +12,8 @@ from Array import (createClientRecords,
                    testNumberTwo,
                    testNumberThree,
                    )
+from Client import Client
+
 
 class ProjectApp():
     """
@@ -145,6 +147,7 @@ class ProjectApp():
         self.array_list = funWithArrays
         self.client_count = numofClients
         self.client_data_records = clientRecords
+        testNumberOne(numofClients, funWithArrays, clientRecords)
         logging.info("\nCreating Array!\nArray Created successfully!")
 
     @Slot()
@@ -176,7 +179,7 @@ class ProjectApp():
 
 
     @Slot()
-    def array_test_two(self):
+    def array_test_two(self): #FICME keep getting none when printing random records.
         
         if checkForExistingArray(self.array_list) == True:
             print("Running Test Two!")

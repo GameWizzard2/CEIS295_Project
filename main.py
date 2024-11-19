@@ -28,7 +28,7 @@ def main():
     numofClients = len(clientRecords)
     #print(numofClients) #FIXME make this into a test? 
     testNumberOne(numofClients, funWithArrays, clientRecords)
-    testNumberOneContinued(numofClients, funWithArrays, clientRecords) # deletes funwitharray data
+    testNumberOneContinued(numofClients, funWithArrays, clientRecords) # deletes funwitharray data 
     appendToArray(numofClients, funWithArrays, clientRecords)
     testNumberTwo(numofClients, funWithArrays, clientRecords)
     testNumberThree(numofClients, funWithArrays, clientRecords)
