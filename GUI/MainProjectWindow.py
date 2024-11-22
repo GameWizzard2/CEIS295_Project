@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QApplication, QPushButton, QWidget, QVBoxLayout
+from PySide6.QtWidgets import QApplication, QPushButton, QWidget, QVBoxLayout, QMessageBox
 from PySide6.QtCore import Slot
 import sys
 import logging
@@ -15,7 +15,7 @@ from Array import (create_client_records,
                    )
 from Client import Client
 
-
+#FIXME logging is not displaying to terminal
 class ProjectApp():
     """
     A GUI application for interacting with array operations using PySide6.
@@ -36,6 +36,9 @@ class ProjectApp():
         # Create a main window to hold widgets.
         self.window = QWidget()
         self.layout = QVBoxLayout()
+
+        # Create a messagebox to display output.
+        self.messageBox = QMessageBox()
 
         # Create a button, connect it and show it
         self.array_test_one_button = QPushButton("Array List: Test One part A")
@@ -79,6 +82,7 @@ class ProjectApp():
         self.array_test_two_button.clicked.connect(self.array_test_two)
         self.array_test_three_button.clicked.connect(self.array_test_three)
         self.createArrayButton.clicked.connect(self.create_array_fuction)
+        #TODO add remove array button
 
     def show_buttons_in_layout(self):
         """
@@ -148,7 +152,6 @@ class ProjectApp():
         self.array_list = funWithArrays
         self.client_count = numofClients
         self.client_data_records = clientRecords
-        testNumberOne(numofClients, funWithArrays, clientRecords)
         logging.info("\nCreating Array!\nArray Created successfully!")
 
     @Slot()
@@ -170,6 +173,18 @@ class ProjectApp():
         self.client_data_records = clientRecords
         testNumberOne(numofClients, funWithArrays, clientRecords)
 
+
+        #TODO modify all test functions to reutrn out put to display to a dialog box.
+        # Create and show the dialog box
+        self.messageBox.setWindowTitle("Action Completed")
+        self.messageBox.setText(f"Clients have been successfully removed!\n\nTerminal Output:")
+        self.messageBox.setIcon(QMessageBox.Information)
+        self.messageBox.setStandardButtons(QMessageBox.Ok)
+
+        # Show the dialog and wait for user interaction
+        self.messageBox.exec()
+
+#FIXME Make sure it informs user when an array has not been created to delete Logging needs to be displayed.
     @Slot()
     def array_test_one_b(self):
         if not checkForExistingArray(self.client_count, self.array_list):
@@ -181,6 +196,7 @@ class ProjectApp():
         self.client_count = 0
         logging.info("All clients have been removed!")
 
+#FIXME Make sure it informs user when an array has not been created to delete.
     @Slot()
     def array_test_two(self):
         
