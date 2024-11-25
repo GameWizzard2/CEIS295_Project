@@ -93,9 +93,7 @@ def testNumberTwo(numofClients: int, arrayList: 'ArrayList'):
     endTime = time.time()
     return endTime - startTime
 
-    
-
-def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client'], ):
+def testNumberThree(numofClients: int, arrayList: 'ArrayList' = None, clientRecords: List['Client'] = None, ):
     """
     Tests the time taken to add, display, and remove Client records from an ArrayList.
 
@@ -126,22 +124,16 @@ def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: Li
         smallest_id = 100001
         largest_id = smallest_id + numofClients
         random_num = random.randint(smallest_id, largest_id)
-        #print(funWithArrays.search(Client(random_num)))
-        print(arrayList.search_sorted(Client(random_num)))
+        print(arrayList.search(Client(random_num)))
+        #print(arrayList.search_sorted(Client(random_num)))
 
     # Delete 1000 random records
-    for i in range(1000):
-        smallestId = 100001
-        largestId = smallestId + numofClients
-        random_num = random.randint(smallest_id, largest_id)
-       #print(funWithArrays.search(Client(random_num))) #FIXME allow user to choose.
-        print(arrayList.search_sorted(Client(random_num)))
+    remove_from_array(numofClients, arrayList)
 
 
     endTime = time.time()
     return endTime - startTime
 
-    
 def appendToArray(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client']):
     """
     Add clientrecords to an array list Tests.
@@ -210,7 +202,6 @@ def create_client_records():
             clientRecords.append(clt)
         return clientRecords
 
-        
 # working on reformating this to only call to create an array, and check for an existing one.
 def createArray():
     """

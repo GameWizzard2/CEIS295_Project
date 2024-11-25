@@ -1,3 +1,4 @@
+from pydoc import cli
 from PySide6.QtWidgets import QApplication, QPushButton, QWidget, QVBoxLayout, QMessageBox
 from PySide6.QtCore import Slot
 import sys
@@ -115,6 +116,14 @@ class ProjectApp():
         self.messageBox.setStandardButtons(QMessageBox.Ok)
         self.messageBox.exec()
 
+    def check_for_array(self):
+        if not checkForExistingArray(self._client_count, self._array_list):
+            message = ("Please click the create array button before running this test")
+            self.show_message_box("Error: No existing array.", message)
+            # Exit the function early if check fails
+            return False
+        else:
+            return True
     # Getter and Setter for array_list
     @property
     def array_list(self):
@@ -164,9 +173,10 @@ class ProjectApp():
         exists, and then runs Test Number One.
         """
         funWithArrays, numofClients, clientRecords = createArray()
-        self.array_list = funWithArrays
+        self._array_list = funWithArrays
         self._client_count = numofClients
-        self.client_data_records = clientRecords
+        self._client_data_records = clientRecords
+        appendToArray(self._client_count, self._array_list, self._client_data_records)
         logging.info("\nCreating Array!\nArray Created successfully!")
 
     @Slot()
@@ -183,9 +193,9 @@ class ProjectApp():
         """
         logging.debug("Running Test One, Creating Array!")
         funWithArrays, numofClients, clientRecords = createArray()
-        self.array_list = funWithArrays
+        self._array_list = funWithArrays
         self._client_count = numofClients
-        self.client_data_records = clientRecords
+        self._client_data_records = clientRecords
         elapsedTime = testNumberOne(numofClients, funWithArrays, clientRecords)
 
         message= (
@@ -198,50 +208,61 @@ class ProjectApp():
 #FIXME Make sure it informs user when an array has not been created to delete Logging needs to be displayed.
     @Slot()
     def array_test_one_b(self):
-        if not checkForExistingArray(self._client_count, self.array_list):
-            # Exit the function early if check fails
-            return
+        if self.check_for_array() is False:
+            return False
         
-        # Proceed if checkForExistingArray returned True
-        elapsedTime = testNumberOneContinued(self._client_count, self.array_list)
-        self._client_count = 0
-        message= (
-                f"Clients have been successfully removed!\n\nOutput:"
-                f"\nTime taken to delete {self._client_count} client records:\n"
-                f"{elapsedTime:.6f} seconds"
-                )
-        logging.info("All clients have been removed!")
-        self.show_message_box("Action Completed", message)
+        else:
+            # Proceed if checkForExistingArray returned True
+            elapsedTime = testNumberOneContinued(self._client_count, self._array_list)
+            message= (
+                    f"Clients have been successfully removed!\n\nOutput:"
+                    f"\nTime taken to delete {self._client_count} client records:\n"
+                    f"{elapsedTime:.6f} seconds"
+                    )
+            logging.info("All clients have been removed!")
+            self._client_count = 0
+            self.show_message_box("Action Completed", message)
 
 #FIXME Make sure it informs user when an array has not been created to delete.
     @Slot()
     def array_test_two(self):
         
-        if not checkForExistingArray(self._client_count, self.array_list):
-            # Exit the function early if check fails
-            return
+        if self.check_for_array() is False:
+            return False
         
-        # Proceed if checkForExistingArray returned True
-        logging.info("Running Test Two!")
-        elapsedTime = testNumberTwo(self._client_count, self.array_list)
-        logging.info("1000 random records have been displayed")
-        message = (f"\n2.\tTime taken to search for {self._client_count} random client records:\n"
-                   F"{elapsedTime:.6f} seconds")
-        self.show_message_box("Action Completed", message)
+        else:
+            # Proceed if checkForExistingArray returned True
+            logging.info("Running Test Two!")
+            elapsedTime = testNumberTwo(self._client_count, self._array_list)
+            logging.info("1000 random records have been displayed")
+            message = (f"\n2.\tTime taken to search for {self._client_count} random client records:\n"
+                    F"{elapsedTime:.6f} seconds")
+            self.show_message_box("Action Completed", message)
 
 
+    #FIXME launch add records then all the other test
     @Slot()
-    def array_test_three(self):#FIXME
-        if not checkForExistingArray(self._client_count, self.array_list):
-            # Exit the function early if check fails
-            return
+    def array_test_three(self):
         
         # Proceed if checkForExistingArray returned True
         logging.info("Running Test Three!")
-        time.sleep(3)
-        elapsedTime = testNumberThree(self._client_count, self.array_list, self.client_data_records)
-        logging.info("Call center simulation completed")
-        message = (f"\n3.\tTime taken to add {self.client_count}, display, then remove 1000 random"
+
+        # Add records
+        funWithArrays, numofClients, clientRecords = createArray()
+        self._array_list = funWithArrays
+        self._client_count = numofClients
+        self._client_data_records = clientRecords
+
+        # Call older test and add up time
+        elapsedTime = testNumberOne(self._client_count, self._array_list, self._client_data_records)
+        elapsedTime =+ testNumberTwo(self._client_count, self._array_list)
+        elapsedTime =+ testNumberOneContinued(self._client_count, self._array_list)
+
+        message = (f"\n3.\tTime taken to add {self._client_count}, display, then remove 1000 random "
                    f"client records:\n{elapsedTime:.6f} seconds")
         self.show_message_box("Action Completed", message)
+
+        # Set Client records to zero after test
+        self._client_count = 0
+        self._client_data_records = None
         
