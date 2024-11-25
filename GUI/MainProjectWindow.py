@@ -1,9 +1,11 @@
 from pydoc import cli
-from PySide6.QtWidgets import QApplication, QPushButton, QWidget, QVBoxLayout, QMessageBox
+from PySide6.QtWidgets import QApplication, QPushButton, QWidget, QVBoxLayout
 from PySide6.QtCore import Slot
 import sys
 import logging
 import time
+
+# Local Imports
 from Array import (create_client_records,
                    createArray,
                    checkForExistingArray,
@@ -14,7 +16,9 @@ from Array import (create_client_records,
                    testNumberTwo,
                    testNumberThree,
                    )
-from Client import Client
+from GUI.Helpers.Helpers_GUI import show_message_box
+from GUI.Helpers.Array_Model import ArrayModel
+
 
 #FIXME logging is not displaying to terminal
 class ProjectApp():
@@ -38,9 +42,6 @@ class ProjectApp():
         self.window = QWidget()
         self.layout = QVBoxLayout()
 
-        # Create a messagebox to display output.
-        self.messageBox = QMessageBox()
-
         # Create a button, connect it and show it
         self.array_test_one_button = QPushButton("Array List: Test One part A")
         self.array_test_one_part_two_button = QPushButton("Array List: Test One part B")
@@ -48,10 +49,8 @@ class ProjectApp():
         self.array_test_three_button = QPushButton("Array List: Test Three")
         self.createArrayButton = QPushButton("Create Array")
 
-        # Internal attributes for array data management
-        self._array_list = None
-        self._client_count = 0
-        self._client_data_records = []
+        # Initialize array model
+        self.model = ArrayModel()
 
     def window_layout(self):
         """
@@ -101,25 +100,10 @@ class ProjectApp():
         self.createArrayButton.show()
         logging.debug("buttons added to window layout from show_buttons_in_layout")
 
-    def show_message_box(self, title: str, message: str, icon: QMessageBox.Icon = QMessageBox.Information):
-        """
-        Displays a message box with the given title, message, and icon.
-
-        Args:
-            title (str): The title of the message box.
-            message (str): The content of the message box.
-            icon (QMessageBox.Icon): The icon to display (default is QMessageBox.Information).
-        """
-        self.messageBox.setWindowTitle(title)
-        self.messageBox.setText(message)
-        self.messageBox.setIcon(icon)
-        self.messageBox.setStandardButtons(QMessageBox.Ok)
-        self.messageBox.exec()
-
     def check_for_array(self):
         if not checkForExistingArray(self._client_count, self._array_list):
             message = ("Please click the create array button before running this test")
-            self.show_message_box("Error: No existing array.", message)
+            show_message_box("Error: No existing array.", message)
             # Exit the function early if check fails
             return False
         else:
@@ -172,11 +156,12 @@ class ProjectApp():
         This function initializes a new array, checks if an existing array
         exists, and then runs Test Number One.
         """
-        funWithArrays, numofClients, clientRecords = createArray()
-        self._array_list = funWithArrays
-        self._client_count = numofClients
-        self._client_data_records = clientRecords
-        appendToArray(self._client_count, self._array_list, self._client_data_records)
+        self._array_list, self._client_count, self._client_data_records = createArray()
+        self._client_count, self._array_list, self._client_data_records = self.model.create_array(
+            self._client_count, 
+            self._array_list, 
+            self._client_data_records
+            )
         logging.info("\nCreating Array!\nArray Created successfully!")
 
     @Slot()
@@ -203,7 +188,7 @@ class ProjectApp():
                 f"\nTime taken to add {self._client_count} client records:\n"
                 f"{elapsedTime:.6f} seconds"
                 )
-        self.show_message_box("Action Completed", message)
+        show_message_box("Action Completed", message)
 
 #FIXME Make sure it informs user when an array has not been created to delete Logging needs to be displayed.
     @Slot()
@@ -221,7 +206,7 @@ class ProjectApp():
                     )
             logging.info("All clients have been removed!")
             self._client_count = 0
-            self.show_message_box("Action Completed", message)
+            show_message_box("Action Completed", message)
 
 #FIXME Make sure it informs user when an array has not been created to delete.
     @Slot()
@@ -237,7 +222,7 @@ class ProjectApp():
             logging.info("1000 random records have been displayed")
             message = (f"\n2.\tTime taken to search for {self._client_count} random client records:\n"
                     F"{elapsedTime:.6f} seconds")
-            self.show_message_box("Action Completed", message)
+            show_message_box("Action Completed", message)
 
 
     #FIXME launch add records then all the other test
@@ -260,7 +245,7 @@ class ProjectApp():
 
         message = (f"\n3.\tTime taken to add {self._client_count}, display, then remove 1000 random "
                    f"client records:\n{elapsedTime:.6f} seconds")
-        self.show_message_box("Action Completed", message)
+        show_message_box("Action Completed", message)
 
         # Set Client records to zero after test
         self._client_count = 0
