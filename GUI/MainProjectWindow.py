@@ -100,6 +100,21 @@ class ProjectApp():
         self.createArrayButton.show()
         logging.debug("buttons added to window layout from show_buttons_in_layout")
 
+    def show_message_box(self, title: str, message: str, icon: QMessageBox.Icon = QMessageBox.Information):
+        """
+        Displays a message box with the given title, message, and icon.
+
+        Args:
+            title (str): The title of the message box.
+            message (str): The content of the message box.
+            icon (QMessageBox.Icon): The icon to display (default is QMessageBox.Information).
+        """
+        self.messageBox.setWindowTitle(title)
+        self.messageBox.setText(message)
+        self.messageBox.setIcon(icon)
+        self.messageBox.setStandardButtons(QMessageBox.Ok)
+        self.messageBox.exec()
+
     # Getter and Setter for array_list
     @property
     def array_list(self):
@@ -141,7 +156,7 @@ class ProjectApp():
 
 
     @Slot()
-    def create_array_fuction(self):#FIXME make this fuction create an array then add the button above
+    def create_array_fuction(self):#FIXME Not working as intended for test 2, it displays none make this fuction create an array then add the button above
         """
         Creates an array and runs a test on it.
 
@@ -150,7 +165,7 @@ class ProjectApp():
         """
         funWithArrays, numofClients, clientRecords = createArray()
         self.array_list = funWithArrays
-        self.client_count = numofClients
+        self._client_count = numofClients
         self.client_data_records = clientRecords
         logging.info("\nCreating Array!\nArray Created successfully!")
 
@@ -169,56 +184,64 @@ class ProjectApp():
         logging.debug("Running Test One, Creating Array!")
         funWithArrays, numofClients, clientRecords = createArray()
         self.array_list = funWithArrays
-        self.client_count = numofClients
+        self._client_count = numofClients
         self.client_data_records = clientRecords
-        testNumberOne(numofClients, funWithArrays, clientRecords)
+        elapsedTime = testNumberOne(numofClients, funWithArrays, clientRecords)
 
-
-        #TODO modify all test functions to reutrn out put to display to a dialog box.
-        # Create and show the dialog box
-        self.messageBox.setWindowTitle("Action Completed")
-        self.messageBox.setText(f"Clients have been successfully removed!\n\nTerminal Output:")
-        self.messageBox.setIcon(QMessageBox.Information)
-        self.messageBox.setStandardButtons(QMessageBox.Ok)
-
-        # Show the dialog and wait for user interaction
-        self.messageBox.exec()
+        message= (
+                f"Clients have been successfully added!\n\nTerminal Output:"
+                f"\nTime taken to add {self._client_count} client records:\n"
+                f"{elapsedTime:.6f} seconds"
+                )
+        self.show_message_box("Action Completed", message)
 
 #FIXME Make sure it informs user when an array has not been created to delete Logging needs to be displayed.
     @Slot()
     def array_test_one_b(self):
-        if not checkForExistingArray(self.client_count, self.array_list):
+        if not checkForExistingArray(self._client_count, self.array_list):
             # Exit the function early if check fails
             return
         
         # Proceed if checkForExistingArray returned True
-        testNumberOneContinued(self.client_count, self.array_list)
-        self.client_count = 0
+        elapsedTime = testNumberOneContinued(self._client_count, self.array_list)
+        self._client_count = 0
+        message= (
+                f"Clients have been successfully removed!\n\nOutput:"
+                f"\nTime taken to delete {self._client_count} client records:\n"
+                f"{elapsedTime:.6f} seconds"
+                )
         logging.info("All clients have been removed!")
+        self.show_message_box("Action Completed", message)
 
 #FIXME Make sure it informs user when an array has not been created to delete.
     @Slot()
     def array_test_two(self):
         
-        if not checkForExistingArray(self.client_count, self.array_list):
+        if not checkForExistingArray(self._client_count, self.array_list):
             # Exit the function early if check fails
             return
         
         # Proceed if checkForExistingArray returned True
         logging.info("Running Test Two!")
-        testNumberTwo(self.client_count, self.array_list)
+        elapsedTime = testNumberTwo(self._client_count, self.array_list)
         logging.info("1000 random records have been displayed")
+        message = (f"\n2.\tTime taken to search for {self._client_count} random client records:\n"
+                   F"{elapsedTime:.6f} seconds")
+        self.show_message_box("Action Completed", message)
 
 
     @Slot()
     def array_test_three(self):#FIXME
-        if not checkForExistingArray(self.client_count, self.array_list):
+        if not checkForExistingArray(self._client_count, self.array_list):
             # Exit the function early if check fails
             return
         
         # Proceed if checkForExistingArray returned True
         logging.info("Running Test Three!")
         time.sleep(3)
-        testNumberThree(self.client_count, self.array_list, self.client_data_records)
+        elapsedTime = testNumberThree(self._client_count, self.array_list, self.client_data_records)
         logging.info("Call center simulation completed")
+        message = (f"\n3.\tTime taken to add {self.client_count}, display, then remove 1000 random"
+                   f"client records:\n{elapsedTime:.6f} seconds")
+        self.show_message_box("Action Completed", message)
         

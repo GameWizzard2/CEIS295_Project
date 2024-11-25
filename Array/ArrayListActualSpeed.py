@@ -30,13 +30,12 @@ def testNumberOne(numofClients, arrayList, clientRecords):
         clientRecords (list): A list containing Client objects to be added to the ArrayList.
 
     Returns:
-        None
+        elaspedTime from test
     """
     startTime = time.time()
     appendToArray(numofClients, arrayList, clientRecords)
     endTime = time.time()
-    elapsedTime = endTime - startTime
-    print(f"\n1.\tTime taken to add {numofClients} client records to ArrayList: {elapsedTime:.6f} seconds")
+    return endTime - startTime
 
 # Consider this removeFromStart()
 def testNumberOneContinued(numofClients: int, arrayList: 'ArrayList'):
@@ -54,14 +53,13 @@ def testNumberOneContinued(numofClients: int, arrayList: 'ArrayList'):
                            to which Client objects will be added.
 
     Returns:
-        None
+        elaspedTime from test
 
     """
     startTime = time.time()
     remove_from_array(numofClients, arrayList)
     endTime = time.time()
-    elapsedTime = endTime - startTime
-    print(f"\n1-2.\tTime taken to remove {numofClients} client records from ArrayList: {elapsedTime:.6f} seconds")
+    return endTime - startTime
 
 # Consider this displayAThousandRandomRecords()
 def testNumberTwo(numofClients: int, arrayList: 'ArrayList'):
@@ -80,7 +78,7 @@ def testNumberTwo(numofClients: int, arrayList: 'ArrayList'):
                                from which client records will be searched.
 
     Returns:
-        None
+        elaspedTime from test
     """
     # How long does it take to display 1000 random records?
     startTime = time.time()
@@ -93,8 +91,8 @@ def testNumberTwo(numofClients: int, arrayList: 'ArrayList'):
 
 
     endTime = time.time()
-    elapsedTime = endTime - startTime
-    print(f"\n2.\tTime taken to search for {numofClients} random client records: {elapsedTime:.6f} seconds")
+    return endTime - startTime
+
     
 
 def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client'], ):
@@ -117,7 +115,7 @@ def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: Li
         clientRecords (list of Client): A list containing Client objects to be added to the ArrayList.
 
     Returns:
-        None
+        elaspedTime from test
     """
     startTime = time.time()
     # append to array.
@@ -141,8 +139,8 @@ def testNumberThree(numofClients: int, arrayList: 'ArrayList', clientRecords: Li
 
 
     endTime = time.time()
-    elapsedTime = endTime - startTime
-    print(f"\n3.\tTime taken to add {numofClients}, display, then remove 1000 random client records: {elapsedTime:.6f} seconds")
+    return endTime - startTime
+
     
 def appendToArray(numofClients: int, arrayList: 'ArrayList', clientRecords: List['Client']):
     """
