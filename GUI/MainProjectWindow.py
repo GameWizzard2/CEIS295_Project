@@ -35,6 +35,12 @@ class ProjectApp():
         Creates an instance of the QApplication, sets up the main window,
         layout, and initializes buttons for array operations.
         """
+        
+        """Initialize private attributes with default values."""
+        self._client_count = 0                # Initialize with a default integer
+        self._client_data_records = []        # Initialize with an empty list
+        self._array_list = None               # Initialize with None or a default ArrayList instance
+
         # Create the Qt Application
         self.app = QApplication(sys.argv)
 
@@ -51,6 +57,8 @@ class ProjectApp():
 
         # Initialize array model
         self.model = ArrayModel()
+
+        
 
     def window_layout(self):
         """
@@ -156,12 +164,13 @@ class ProjectApp():
         This function initializes a new array, checks if an existing array
         exists, and then runs Test Number One.
         """
-        self._array_list, self._client_count, self._client_data_records = createArray()
-        self._client_count, self._array_list, self._client_data_records = self.model.create_array(
-            self._client_count, 
-            self._array_list, 
-            self._client_data_records
-            )
+        numofClients, funWithArrays, clientRecords = createArray()
+
+        # Use setters to assign values
+        self.array_list = funWithArrays
+        self.client_count = numofClients
+        self.client_data_records = clientRecords
+        
         logging.info("\nCreating Array!\nArray Created successfully!")
 
     @Slot()
@@ -177,10 +186,12 @@ class ProjectApp():
         if necessary, then runs Test Number One.
         """
         logging.debug("Running Test One, Creating Array!")
-        funWithArrays, numofClients, clientRecords = createArray()
-        self._array_list = funWithArrays
-        self._client_count = numofClients
-        self._client_data_records = clientRecords
+        numofClients, funWithArrays, clientRecords = createArray()
+
+        # Use setters to assign values
+        self.array_list = funWithArrays
+        self.client_count = numofClients
+        self.client_data_records = clientRecords
         elapsedTime = testNumberOne(numofClients, funWithArrays, clientRecords)
 
         message= (

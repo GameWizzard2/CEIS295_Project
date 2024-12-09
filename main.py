@@ -1,6 +1,4 @@
 from Array import (create_client_records,
-                   createArray,
-                   checkForExistingArray,
                    appendToArray,
                    ArrayList, 
                    testNumberOne, 

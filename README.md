@@ -121,7 +121,6 @@ The `Array` folder is a Python package that contains multiple modules for handli
 
 - Runs the entire project, combining logging, data handling, and GUI.
 
----
 ## Contributing
 
 Contributions are welcome! To contribute:
@@ -134,10 +133,8 @@ Contributions are welcome! To contribute:
 ---
 
 ## Author
-**Christopher H Barfield**
+Christopher H Barfield
 Bachelor of Science in Software Development
-
-Email: YourEmail@example.com
 GitHub: https://github.com/GameWizzard2
 
 
