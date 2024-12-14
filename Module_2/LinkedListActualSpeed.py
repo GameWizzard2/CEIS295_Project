@@ -9,7 +9,6 @@ from utilities import (
 )
 
 # Built-in
-from datetime import date
 import random
 import time
 
@@ -17,7 +16,7 @@ import time
 from typing import List
 
 
-def testLinkedOne(numofClients: int, linkedList: 'linkedList', clientRecords: List['Client']):
+def testLinkedOne(numofClients: int, linkedList: 'LinkedList', clientRecords: List['Client']):
         """
     Desciption: TODO
 
