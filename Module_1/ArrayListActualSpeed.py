@@ -1,17 +1,22 @@
 #Name: Christopher Barfield
 #Date:  11/2/2024
 
-from ArrayList import ArrayList
+# local
 from Client import Client
-from Quicksort import Quicksort
+from utilities import (
+    appendToArray,
+    createClientRecords,
+    userContinueInput
+)
+
+# built-in
 from datetime import date
 import time
 import random
-import sys
 
 
 # Consdier this addRecords()
-def testNumberOne():
+def testNumberOne(numofClients, clientRecords):
     """
     Let’s test the first scenario. If you accept jobs at the back of the line and then process the jobs 
     from the front of the line, which data structure is best? Write code to test how much time that 
@@ -20,13 +25,14 @@ def testNumberOne():
     time to the spreadsheet into the “Add many records to end of data structure” row in the Excel table.
     """
     startTime = time.time()
-    appendToArray(numofClients)
+    arrayList = appendToArray(numofClients, clientRecords)
     endTime = time.time()
     elapsedTime = endTime - startTime
     print(f"\n1.\tTime taken to add {numofClients} client records to ArrayList: {elapsedTime:.6f} seconds")
 
+    return arrayList
 # Consider this removeFromStart()
-def testNumberOneContinued():
+def testNumberOneContinued(numofClients, arrayList):
     """
     11.	Continue the ArrayListActualSpeed code and write code to test how much time it takes to remove 
     all of the Client objects from the front of the ArrayList, one object at a time. Add this time to 
@@ -34,13 +40,13 @@ def testNumberOneContinued():
     """
     startTime = time.time()
     for i in range(numofClients):
-        funWithArrays.remove_at(0)
+        arrayList.remove_at(0)
     endTime = time.time()
     elapsedTime = endTime - startTime
     print(f"\n1-2.\tTime taken to remove {numofClients} client records from ArrayList: {elapsedTime:.6f} seconds")
 
 # Consider this displayAThousandRandomRecords()
-def testNumberTwo(numOfClients):
+def testNumberTwo(numofClients, arrayList):
     """
     12.	Now, let’s test the second scenario. A customer service center receives calls from random customers. 
     The customer service center must be able to quickly pull up the customer’s record. Is the ArrayList good 
@@ -56,14 +62,15 @@ def testNumberTwo(numOfClients):
         largest_id = smallest_id + numofClients
         random_num = random.randint(smallest_id, largest_id)
         #print(funWithArrays.search(Client(random_num)))
-        print(funWithArrays.search_sorted(Client(random_num)))
+        print(arrayList.search_sorted(Client(random_num)))
 
 
     endTime = time.time()
     elapsedTime = endTime - startTime
-    print(f"\n2.\tTime taken to search for {numOfClients} random client records: {elapsedTime:.6f} seconds")
+    print(f"\n2.\tTime taken to search for {numofClients} random client records: {elapsedTime:.6f} seconds")
+    return arrayList
 
-def testNumberThree(numOfClients):
+def testNumberThree(numofClients, clientRecords):
     """
     3.	Let’s consider the third scenario. Consider a credit card call center. The representatives may sign up new 
     credit card accounts (add records). The representatives may answer customers’ questions (display random records). 
@@ -73,7 +80,7 @@ def testNumberThree(numOfClients):
     """
     startTime = time.time()
     # append to array.
-    appendToArray(numofClients)
+    arrayList = appendToArray(numofClients, clientRecords)
 
     # Display 1000 random records.
     for i in range(1000):
@@ -81,64 +88,17 @@ def testNumberThree(numOfClients):
         largest_id = smallest_id + numofClients
         random_num = random.randint(smallest_id, largest_id)
         #print(funWithArrays.search(Client(random_num)))
-        print(funWithArrays.search_sorted(Client(random_num)))
+        print(arrayList.search_sorted(Client(random_num)))
     
     # Delete 1000 random records
     for i in range(1000):
         smallestId = 100001
         largestId = smallestId + numofClients
         random_num = random.randint(smallest_id, largest_id)
-       #print(funWithArrays.search(Client(random_num)))
-        print(funWithArrays.search_sorted(Client(random_num)))
+       #print(arrayList.search(Client(random_num)))
+        print(arrayList.search_sorted(Client(random_num)))
 
     endTime = time.time()
     elapsedTime = endTime - startTime
     print(f"\n3.\tTime taken to add {numofClients}, and then display and remove 1000 random client records: {elapsedTime:.6f} seconds")
-    
-def appendToArray(numOfClients):
-    """
-    Append clientRecords to an array object
-    """
-    for i in range(numofClients):
-        funWithArrays.append(clientRecords[i])
-
-def createClientRecords():
-    input_file_name = '.\Module_1\ClientData.csv'
-    with open(input_file_name) as infile:
-        for line in infile:
-            s = line.split(',')
-            client_id = int(s[0])  # convert the default string to an int
-            f_name = s[1]
-            l_name = s[2]
-            phone = s[3]
-            email = s[4]
-            
-            # create a client object using the data from the file
-            clt = Client(client_id, f_name, l_name, phone, email)
-            
-            # add the client object to the list
-            clientRecords.append(clt)
-
-def userContinueInput():
-    print("Press \"Enter\" to continue...")
-    sys.stdin.read(1)  # Reads one character (like Enter) from standard input
-
-# display name and date in output
-print("Name:", "Christopher H Barfield")
-print("Date:", date.today())
-
-clientRecords = []
-createClientRecords()
-Quicksort.sort(clientRecords)
-funWithArrays = ArrayList()
-numofClients = len(clientRecords)
-
-testNumberOne()
-testNumberOneContinued() # deletes funwitharray data
-userContinueInput()
-appendToArray(numofClients)
-testNumberTwo(numofClients)
-userContinueInput()
-testNumberThree(numofClients)
-userContinueInput()
-
+    return arrayList
