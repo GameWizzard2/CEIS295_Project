@@ -5,27 +5,7 @@ import time
 import random
 import sys
 
-# Local imports
-from Queue import Queue
-from Call import Call
 
-def createCallQueue(newList = []):
-    input_file_name = '.\Module_2\ClientData.csv'
-    with open(input_file_name) as infile:
-        for line in infile:
-            s = line.split(',')
-            clientId = int(s[0])  # convert the default string to an int
-            customerName = s[1]
-            customerPhone = s[2]
-            # Create a Call object based on the line from the file.
-            callQueue = Call(clientId, customerName, customerPhone)
-            # Add the call object to the list
-            newList.append(callQueue)
-        return newList
-    
-def userContinueInput():
-    print("Press \"Enter\" to continue...")
-    sys.stdin.read(1)  # Reads one character (like Enter) from standard input
 
 def automatedCallCenterTest(callQueueList, callWaiting ):
     """
@@ -64,15 +44,3 @@ def automatedCallCenterTest(callQueueList, callWaiting ):
             print("Nothing currently happening this second in time.")
             print(f"Number of calls currently waiting in queue: {callWaiting.get_length()}")
     print(f"{"-" * 40}\n<Automated Call Distributation Simulation Completed>")
-
-def main():
-    print("Name:", "Christopher H Barfield")
-    print("Date:", date.today())
-    userContinueInput()
-    callQueueList = createCallQueue()
-    callWaiting = Queue()
-    automatedCallCenterTest(callQueueList, callWaiting)
-
-
-if __name__ == "__main__":
-    main()
