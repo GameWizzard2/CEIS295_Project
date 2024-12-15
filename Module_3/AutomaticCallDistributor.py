@@ -3,19 +3,37 @@
 from datetime import date
 import time
 import random
-import sys
-
-
 
 def automatedCallCenterTest(callQueueList, callWaiting ):
     """
-    8.	Ask the user for the number of seconds to run the simulation. Create a for loop that will run one time for each second that was inputted. In the for loop, take these steps:
+        Simulate an automated call center queue over a user-defined duration.
 
-    a.	Pause the application for two seconds using time.sleep(2)
-    b.	Generate a random number from 1 to 3
-    c.	If the random number is 1, add a call to the call_waiting queue and then increment the call_number variable. Then, show how many calls are currently in the call_waiting queue.
-    d.	Otherwise, if the randomly generated number is 2, remove a call from the call_waiting queue and tell the user that the call is being routed to a service representative. Display the call’s information. Then, show how many calls are currently in the call_waiting queue.
-    e.	Otherwise, do nothing to the queue. Tell the user that nothing happened during this second of time. Then, show how many calls are currently in the call_waiting queue.
+        This function runs a simulation where calls are randomly added, removed, or left unchanged in a queue.
+        The simulation pauses for two seconds on each iteration to mimic real-time behavior.
+
+        Args:
+            callQueueList (list): A list of calls that will be added to the call_waiting queue during the simulation.
+            callWaiting (Queue): A queue data structure representing calls waiting to be serviced.
+
+        Returns:
+            None
+
+        Simulation Steps:
+            1. Prompt the user for the number of seconds to run the simulation.
+            2. For each second in the simulation:
+                a. Pause the program for 2 seconds using `time.sleep(2)`.
+                b. Generate a random event (1, 2, or 3):
+                    - If 1: Add a call to the queue and display the current queue length.
+                    - If 2: Remove a call from the queue, display its details, and show the updated queue length.
+                    - If 3: Do nothing and display the current queue length.
+            3. Print a message indicating the end of the simulation.
+
+        Prints:
+            Status updates during each second of the simulation, including:
+            - Calls added to the queue.
+            - Calls removed and their details.
+            - Current number of calls waiting in the queue.
+            - Messages for no events occurring.
     """
     callNumber = 0
     # How long is the simulation

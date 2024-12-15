@@ -5,11 +5,8 @@ from utilities import (
     createCallQueue,
     userContinueInput,
 )
-from LinkedList import LinkedList
-
 # Built-in
 from datetime import date
-
 
 def main():
     print("Name:", "Christopher H Barfield")
