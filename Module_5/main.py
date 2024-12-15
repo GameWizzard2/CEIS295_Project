@@ -47,13 +47,6 @@ def main():
         #begin_binary_search_test(numofClients, clientRecords)
         
         flag = user_rerun_section()
-        
-        
-
-
-
-    
-    
 
 if __name__ == '__main__':
     main()
