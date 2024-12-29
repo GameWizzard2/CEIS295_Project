@@ -47,7 +47,7 @@ def test_two(numofClients, myBst):
 
     endTime = time.time()
     elaspedTime = endTime - startTime
-    print(f"Total time to display 1000 records: {elaspedTime:.6f}\n")
+    print(f"Total time to display 1000 random records: {elaspedTime:.6f}\n")
 
 
 def test_three(numofRecords, clinetList, binaryTree):

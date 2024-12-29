@@ -125,6 +125,7 @@ def sorting_speeds_test(sort_function, sort_name, numofClients, clientRecords):
         - The time taken to sort the records.
         - The sorted client records.
         """
+        startTime = time.time()
         sort_function(clientRecords)
         endTime = time.time()
         elapsedTime = endTime - startTime
