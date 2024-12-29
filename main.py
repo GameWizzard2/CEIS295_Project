@@ -6,7 +6,7 @@ from Array import (create_client_records,
                    testNumberTwo,
                    testNumberThree,
                    )
-from GUI import ProjectApp
+from GUI import ModuleOneGUI
 from Logger import CustomLogger
 from SortingAlgo import Quicksort
 from datetime import date
@@ -21,12 +21,11 @@ def main():
 
     clientRecords = []
     create_client_records(clientRecords)
-    Quicksort.sort(clientRecords) #FIXME make this an optional call for user.
+    Quicksort.sort(clientRecords)
     funWithArrays = ArrayList()
     numofClients = len(clientRecords)
-    #print(numofClients) #FIXME make this into a test? 
     testNumberOne(numofClients, funWithArrays, clientRecords)
-    testNumberOneContinued(numofClients, funWithArrays, clientRecords) # deletes funwitharray data 
+    testNumberOneContinued(numofClients, funWithArrays, clientRecords)
     appendToArray(numofClients, funWithArrays, clientRecords)
     testNumberTwo(numofClients, funWithArrays, clientRecords)
     testNumberThree(numofClients, funWithArrays, clientRecords)
@@ -36,4 +35,4 @@ def main():
 
 if __name__ == "__main__":
     CustomLogger.main()
-    ProjectApp().run()
+    ModuleOneGUI().run()

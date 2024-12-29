@@ -1,1 +1,1 @@
-from .MainProjectWindow import ProjectApp
+from .ModuleOneGUI import ModuleOneGUI

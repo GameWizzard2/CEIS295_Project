@@ -1,27 +1,25 @@
-from pydoc import cli
-from PySide6.QtWidgets import QApplication, QPushButton, QWidget, QVBoxLayout
-from PySide6.QtCore import Slot
+# Built-in
 import sys
 import logging
-import time
+
+# Third Party
+from PySide6.QtWidgets import QApplication, QPushButton, QWidget, QVBoxLayout
+from PySide6.QtCore import Slot
 
 # Local Imports
-from Array import (create_client_records,
-                   createArray,
+from Array import (createArray,
                    checkForExistingArray,
-                   appendToArray,
                    ArrayList, 
                    testNumberOne, 
                    testNumberOneContinued,
                    testNumberTwo,
-                   testNumberThree,
+                   Quicksort,
                    )
-from GUI.Helpers.Helpers_GUI import show_message_box
-from GUI.Helpers.Array_Model import ArrayModel
+from GUI.Utilities.Helpers_GUI import show_message_box
+from GUI.Utilities.Array_Model import ArrayModel
 
 
-#FIXME logging is not displaying to terminal
-class ProjectApp():
+class ModuleOneGUI():
     """
     A GUI application for interacting with array operations using PySide6.
 
@@ -48,17 +46,11 @@ class ProjectApp():
         self.window = QWidget()
         self.layout = QVBoxLayout()
 
-        # Create a button, connect it and show it
-        self.array_test_one_button = QPushButton("Array List: Test One part A")
-        self.array_test_one_part_two_button = QPushButton("Array List: Test One part B")
-        self.array_test_two_button = QPushButton("Array List: Test Two")
-        self.array_test_three_button = QPushButton("Array List: Test Three")
-        self.createArrayButton = QPushButton("Create Array")
+        # Initialize buttons
+        self.init_buttons()
 
         # Initialize array model
         self.model = ArrayModel()
-
-        
 
     def window_layout(self):
         """
@@ -76,12 +68,22 @@ class ProjectApp():
         adds buttons to the layout, and starts the main event loop.
         """
         self.window_layout()
-        self.button_functions()
+        self.connect_signals()
         self.show_buttons_in_layout()
         # Run the main Qt loop
         self.app.exec()
 
-    def button_functions(self):
+    def init_buttons(self):
+        """Initialize all buttons."""
+        self.array_test_one_button = QPushButton("Array List: Test One part A")
+        self.array_test_one_part_two_button = QPushButton("Array List: Test One part B")
+        self.array_test_two_button = QPushButton("Array List: Test Two")
+        self.array_test_three_button = QPushButton("Array List: Test Three")
+        self.createArrayButton = QPushButton("Create Array")
+        self.removeArrayButton = QPushButton("Remove Array")
+        self.sortArrayButton = QPushButton("Sort Array")
+
+    def connect_signals(self):
         """
         Connects button clicks to their corresponding functions.
         """
@@ -89,34 +91,31 @@ class ProjectApp():
         self.array_test_one_part_two_button.clicked.connect(self.array_test_one_b)
         self.array_test_two_button.clicked.connect(self.array_test_two)
         self.array_test_three_button.clicked.connect(self.array_test_three)
-        self.createArrayButton.clicked.connect(self.create_array_fuction)
-        #TODO add remove array button
+        self.createArrayButton.clicked.connect(self.create_array_function)
+        self.removeArrayButton.clicked.connect(self.remove_array)
+        self.sortArrayButton.clicked.connect(self.sort_array)
+        
 
     def show_buttons_in_layout(self):
         """
         Adds buttons to the window layout and ensures they are visible.
         """
-        self.layout.addWidget(self.array_test_one_button)
-        self.layout.addWidget(self.array_test_one_part_two_button)
-        self.layout.addWidget(self.array_test_two_button)
-        self.layout.addWidget(self.array_test_three_button)
-        self.layout.addWidget(self.createArrayButton)
-        self.array_test_one_button.show()
-        self.array_test_one_part_two_button.show()
-        self.array_test_two_button.show()
-        self.array_test_three_button.show()
-        self.createArrayButton.show()
-        logging.debug("buttons added to window layout from show_buttons_in_layout")
+        buttons = [
+            self.array_test_one_button,
+            self.array_test_one_part_two_button,
+            self.array_test_two_button,
+            self.array_test_three_button,
+            self.createArrayButton,
+            self.removeArrayButton,
+            self.sortArrayButton,
+        ]
 
-    def check_for_array(self):
-        if not checkForExistingArray(self._client_count, self._array_list):
-            message = ("Please click the create array button before running this test")
-            show_message_box("Error: No existing array.", message)
-            # Exit the function early if check fails
-            return False
-        else:
-            return True
-    # Getter and Setter for array_list
+        for button in buttons:
+            self.layout.addWidget(button)
+
+        logging.debug("buttons added to window layout from show_buttons_in_layout")
+        
+    # Getter and Setter for array_list _________________________________________________________________
     @property
     def array_list(self):
         """Getter for the array list."""
@@ -155,27 +154,22 @@ class ProjectApp():
             raise ValueError("client_data_records must be a list")
         self._client_data_records = value
 
+    # Button Functions ____________________________________________________________________
+    @Slot()
+    def create_array_function(self):
+        self.create_and_assign_array()
+        logging.info("Array created successfully.")
 
     @Slot()
-    def create_array_fuction(self):#FIXME Not working as intended for test 2, it displays none make this fuction create an array then add the button above
-        """
-        Creates an array and runs a test on it.
-
-        This function initializes a new array, checks if an existing array
-        exists, and then runs Test Number One.
-        """
-        numofClients, funWithArrays, clientRecords = createArray()
-
-        # Use setters to assign values
-        self.array_list = funWithArrays
-        self.client_count = numofClients
-        self.client_data_records = clientRecords
-        
-        logging.info("\nCreating Array!\nArray Created successfully!")
+    def remove_array(self):
+        self._client_count = 0
+        self._client_data_records = None
+        msg = "Array has been erased"
+        show_message_box("Array Removed", msg)
 
     @Slot()
-    def sort_array(self):#FIXME make this fuction create an array then add the button above
-        print("work on implementing fuction using the quicksort algo")
+    def sort_array(self):
+        show_message_box("Under Construction")
 
     @Slot()
     def array_test_one_a(self):
@@ -201,7 +195,6 @@ class ProjectApp():
                 )
         show_message_box("Action Completed", message)
 
-#FIXME Make sure it informs user when an array has not been created to delete Logging needs to be displayed.
     @Slot()
     def array_test_one_b(self):
         if self.check_for_array() is False:
@@ -219,7 +212,6 @@ class ProjectApp():
             self._client_count = 0
             show_message_box("Action Completed", message)
 
-#FIXME Make sure it informs user when an array has not been created to delete.
     @Slot()
     def array_test_two(self):
         
@@ -236,7 +228,6 @@ class ProjectApp():
             show_message_box("Action Completed", message)
 
 
-    #FIXME launch add records then all the other test
     @Slot()
     def array_test_three(self):
         
@@ -244,7 +235,7 @@ class ProjectApp():
         logging.info("Running Test Three!")
 
         # Add records
-        funWithArrays, numofClients, clientRecords = createArray()
+        numofClients, funWithArrays, clientRecords = createArray()
         self._array_list = funWithArrays
         self._client_count = numofClients
         self._client_data_records = clientRecords
@@ -261,4 +252,32 @@ class ProjectApp():
         # Set Client records to zero after test
         self._client_count = 0
         self._client_data_records = None
+
+    # Helper functions, could be seperated later _______________________________________________
+    def check_for_array(self):
+        """
+        Checks if an array exists; prompts the user if not.
+        """
+        if not checkForExistingArray(self._client_count, self._array_list):
+            message = ("Please click the create array button before running this test")
+            show_message_box("Error: No existing array.", message)
+            # Exit the function early if check fails
+            return False
+        else:
+            return True
         
+    def create_and_assign_array(self):
+        """
+        Creates an array and runs a test on it.
+
+        This function initializes a new array, checks if an existing array
+        exists, and then runs Test Number One.
+        """
+        numofClients, funWithArrays, clientRecords = createArray()
+
+        # Use setters to assign values
+        self.array_list = funWithArrays
+        self.client_count = numofClients
+        self.client_data_records = clientRecords
+        
+        logging.info("\nCreating Array!\nArray Created successfully!")

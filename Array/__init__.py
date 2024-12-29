@@ -19,6 +19,8 @@ from .Utilities import (
     checkForExistingArray,
 )
 
+from .Quicksort import Quicksort
+
 
 # Define __all__ to control what gets imported with 'from package import *'
 __all__ = [
