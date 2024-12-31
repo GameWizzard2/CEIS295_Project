@@ -6,7 +6,7 @@ from Array import (create_client_records,
                    testNumberTwo,
                    testNumberThree,
                    )
-from GUI import ModuleOneGUI
+from GUI.Module_One.ModuleOneGUI import ModuleOneGUI
 from Logger import CustomLogger
 from SortingAlgo import Quicksort
 from datetime import date
@@ -14,7 +14,7 @@ from datetime import date
 
 def main():
     # Setup logger.
-    CustomLogger.main()
+    CustomLogger.main() 
     # display name and date in output
     print("Name:", "Christopher H Barfield")
     print("Date:", date.today())

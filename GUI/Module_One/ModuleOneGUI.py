@@ -15,8 +15,8 @@ from Array import (createArray,
                    testNumberTwo,
                    Quicksort,
                    )
-from GUI.Utilities.Helpers_GUI import show_message_box
-from GUI.Utilities.Array_Model import ArrayModel
+from GUI.Module_One import show_message_box
+from GUI.Module_One.Utilities.Array_Model import ArrayModel
 
 
 class ModuleOneGUI():
