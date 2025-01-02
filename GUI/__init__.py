@@ -1,1 +1,2 @@
-from .Module_One.ModuleOneGUI import ModuleOneGUI
+from .Module_1.ArrayGUI import ArrayGUI
+from .MainGUI.MainWindow import MainWindow

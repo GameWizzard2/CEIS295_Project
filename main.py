@@ -1,3 +1,6 @@
+import sys
+
+from PySide6.QtWidgets import QApplication
 from Array import (create_client_records,
                    appendToArray,
                    ArrayList, 
@@ -6,7 +9,7 @@ from Array import (create_client_records,
                    testNumberTwo,
                    testNumberThree,
                    )
-from GUI.Module_One.ModuleOneGUI import ModuleOneGUI
+from GUI.MainGUI.MainWindow import MainWindow
 from Logger import CustomLogger
 from SortingAlgo import Quicksort
 from datetime import date
@@ -35,4 +38,7 @@ def main():
 
 if __name__ == "__main__":
     CustomLogger.main()
-    ModuleOneGUI().run()
+    app = QApplication(sys.argv)
+    main_window = MainWindow()
+    main_window.show()
+    sys.exit(app.exec())

@@ -15,18 +15,18 @@ from Array import (createArray,
                    testNumberTwo,
                    Quicksort,
                    )
-from GUI.Module_One import show_message_box
-from GUI.Module_One.Utilities.Array_Model import ArrayModel
+from GUI.Module_1 import show_message_box
+from GUI.Module_1.Utilities.Array_Model import ArrayModel
 
 
-class ModuleOneGUI():
+class ArrayGUI(QWidget):
     """
     A GUI application for interacting with array operations using PySide6.
 
     This class creates a PySide6-based GUI with buttons to trigger 
     different operations related to arrays and their tests.
     """
-    def __init__(self):
+    def __init__(self, parent=None):
         """
         Initializes the GUI application and its components.
 
@@ -39,11 +39,8 @@ class ModuleOneGUI():
         self._client_data_records = []        # Initialize with an empty list
         self._array_list = None               # Initialize with None or a default ArrayList instance
 
-        # Create the Qt Application
-        self.app = QApplication(sys.argv)
-
         # Create a main window to hold widgets.
-        self.window = QWidget()
+        #self.window = QWidget()
         self.layout = QVBoxLayout()
 
         # Initialize buttons
@@ -56,9 +53,9 @@ class ModuleOneGUI():
         """
         Sets up the layout for the main window and displays it.
         """
-        self.window.setLayout(self.layout)
-        self.window.setWindowTitle("Project App")
-        self.window.show()
+        #self.window.setLayout(self.layout)
+        self.setWindowTitle("Project App")
+        #self.window.show()
 
     def run(self):
         """
@@ -71,7 +68,7 @@ class ModuleOneGUI():
         self.connect_signals()
         self.show_buttons_in_layout()
         # Run the main Qt loop
-        self.app.exec()
+        self.window.show()
 
     def init_buttons(self):
         """Initialize all buttons."""
@@ -281,3 +278,9 @@ class ModuleOneGUI():
         self.client_data_records = clientRecords
         
         logging.info("\nCreating Array!\nArray Created successfully!")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    main_window = ArrayGUI()
+    main_window.run()
+    sys.exit(app.exec())
