@@ -10,6 +10,7 @@ from Array import (create_client_records,
                    testNumberThree,
                    )
 from GUI.MainGUI.MainWindow import MainWindow
+from GUI.Module_1.ArrayGUI import ArrayGUI
 from Logger import CustomLogger
 from SortingAlgo import Quicksort
 from datetime import date
@@ -39,6 +40,6 @@ def main():
 if __name__ == "__main__":
     CustomLogger.main()
     app = QApplication(sys.argv)
-    main_window = MainWindow()
-    main_window.show()
-    sys.exit(app.exec())
+    window = MainWindow()
+    window.show()
+    app.exec()

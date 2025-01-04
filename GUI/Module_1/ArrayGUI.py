@@ -33,41 +33,29 @@ class ArrayGUI(QWidget):
         Creates an instance of the QApplication, sets up the main window,
         layout, and initializes buttons for array operations.
         """
-        
-        """Initialize private attributes with default values."""
+        super().__init__(parent)
+
+        #Initialize private attributes with default values.
         self._client_count = 0                # Initialize with a default integer
         self._client_data_records = []        # Initialize with an empty list
         self._array_list = None               # Initialize with None or a default ArrayList instance
 
-        # Create a main window to hold widgets.
-        #self.window = QWidget()
-        self.layout = QVBoxLayout()
-
-        # Initialize buttons
-        self.init_buttons()
-
         # Initialize array model
         self.model = ArrayModel()
+        
+        # Create a main window
+        self.layout = QVBoxLayout(self)
+        self.init_buttons()
+        self.connect_signals()
+        self.show_buttons_in_layout()
+        self.setWindowTitle("Array Operations")
 
     def window_layout(self):
         """
         Sets up the layout for the main window and displays it.
         """
-        #self.window.setLayout(self.layout)
-        self.setWindowTitle("Project App")
-        #self.window.show()
-
-    def run(self):
-        """
-        Runs the GUI application.
-
-        This method sets up the window layout, connects button actions,
-        adds buttons to the layout, and starts the main event loop.
-        """
-        self.window_layout()
-        self.connect_signals()
-        self.show_buttons_in_layout()
-        # Run the main Qt loop
+        self.window.setLayout(self.layout)
+        self.window.setWindowTitle("Project App")
         self.window.show()
 
     def init_buttons(self):
@@ -154,8 +142,11 @@ class ArrayGUI(QWidget):
     # Button Functions ____________________________________________________________________
     @Slot()
     def create_array_function(self):
-        self.create_and_assign_array()
-        logging.info("Array created successfully.")
+        try:
+            self.create_and_assign_array()
+            logging.info("Array created successfully.")
+        except Exception as e:
+            logging.error(f"Error creating array: {e}")
 
     @Slot()
     def remove_array(self):
@@ -278,9 +269,3 @@ class ArrayGUI(QWidget):
         self.client_data_records = clientRecords
         
         logging.info("\nCreating Array!\nArray Created successfully!")
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    main_window = ArrayGUI()
-    main_window.run()
-    sys.exit(app.exec())
